@@ -54,7 +54,7 @@ class ScheduleSunday extends Model
      */
     public function members(): BelongsToMany
     {
-        return $this->belongsToMany(Member::class, 'sunday_schedule_members')
+        return $this->belongsToMany(Member::class, 'sunday_schedule_members', 'sunday_schedule_id', 'member_id')
             ->withPivot(['is_active', 'assigned_date', 'attendance_status'])
             ->withTimestamps();
     }

@@ -160,7 +160,6 @@ class MemberFactory extends Factory
             'batch_year' => fake()->numberBetween((int) Carbon::now()->subYears(10)->format('Y'), (int) Carbon::now()->format('Y')),
             'date_added' => now(),
             'status' => fake()->randomElement(MemberStatus::cases())->value,
-            'is_deleted' => false,
             'remember_token' => Str::random(10),
         ];
     }

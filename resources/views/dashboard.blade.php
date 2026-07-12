@@ -133,6 +133,11 @@
                     </tbody>
                 </table>
             </div>
+            @if($leaders->hasPages())
+            <div class="mt-4">
+                {{ $leaders->links() }}
+            </div>
+            @endif
             @else
             <p class="text-gray-400 text-sm text-center py-8">No leadership positions assigned yet.</p>
             @endif

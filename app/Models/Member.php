@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\Gender;
 use App\Enums\MemberStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -32,27 +31,12 @@ class Member extends Authenticatable
     protected $fillable = [
         'username',
         'password',
-        'profile_picture',
         'first_name',
         'middle_name',
         'last_name',
-        'birth_date',
-        'gender',
-        'complete_address',
         'contact_number',
-        'email_address',
-        'school_attended',
-        'mother_name',
-        'mother_occupation',
-        'father_name',
-        'father_occupation',
-        'number_of_siblings',
-        'gkk',
-        'date_of_acceptance',
-        'batch_year',
-        'date_added',
+        'birth_date',
         'status',
-        'is_deleted',
         'remember_token',
     ];
 
@@ -84,13 +68,7 @@ class Member extends Authenticatable
     {
         return [
             'birth_date' => 'date',
-            'date_of_acceptance' => 'date',
-            'date_added' => 'datetime',
-            'number_of_siblings' => 'integer',
-            'batch_year' => 'integer',
-            'is_deleted' => 'boolean',
-            'gender' => Gender::class,
-            'status' => MemberStatus::class,
+            'status'     => MemberStatus::class,
         ];
     }
 
@@ -147,14 +125,6 @@ class Member extends Authenticatable
     }
 
     /**
-     * Get the emergency contacts for the member.
-     */
-    public function emergencyContacts(): HasMany
-    {
-        return $this->hasMany(EmergencyContact::class);
-    }
-
-    /**
      * Get the attendance records for the member.
      */
     public function attendanceRecords(): HasMany
@@ -175,7 +145,7 @@ class Member extends Authenticatable
      */
     public function weekdaySchedules(): BelongsToMany
     {
-        return $this->belongsToMany(ScheduleWeekday::class, 'weekday_schedule_members')
+        return $this->belongsToMany(ScheduleWeekday::class, 'weekday_schedule_members', 'member_id', 'weekday_schedule_id')
             ->withPivot(['is_active', 'assigned_date'])
             ->withTimestamps();
     }
@@ -185,7 +155,7 @@ class Member extends Authenticatable
      */
     public function sundaySchedules(): BelongsToMany
     {
-        return $this->belongsToMany(ScheduleSunday::class, 'sunday_schedule_members')
+        return $this->belongsToMany(ScheduleSunday::class, 'sunday_schedule_members', 'member_id', 'sunday_schedule_id')
             ->withPivot(['is_active', 'assigned_date'])
             ->withTimestamps();
     }
@@ -223,7 +193,7 @@ class Member extends Authenticatable
     }
 
     /**
-     * Search members by name, username, email, or GKK.
+     * Search members by name or username.
      */
     public function scopeSearch(Builder $query, ?string $search): Builder
     {
@@ -232,9 +202,7 @@ class Member extends Authenticatable
                 $nested->where('username', 'like', '%' . $search . '%')
                     ->orWhere('first_name', 'like', '%' . $search . '%')
                     ->orWhere('middle_name', 'like', '%' . $search . '%')
-                    ->orWhere('last_name', 'like', '%' . $search . '%')
-                    ->orWhere('email_address', 'like', '%' . $search . '%')
-                    ->orWhere('gkk', 'like', '%' . $search . '%');
+                    ->orWhere('last_name', 'like', '%' . $search . '%');
             });
         });
     }
@@ -263,21 +231,21 @@ class Member extends Authenticatable
 
         // Define permissions per position
         $permissions = [
-            'Secretary' => ['dashboard', 'schedules', 'schedules.create', 'members', 'attendance', 'notifications', 'settings'],
-            'Assistant Secretary' => ['dashboard', 'schedules', 'schedules.create', 'members', 'attendance', 'notifications', 'settings'],
-            
-            'Treasurer' => ['dashboard', 'schedules', 'notifications', 'settings'],
-            'Assistant Treasurer' => ['dashboard', 'schedules', 'notifications', 'settings'],
-            
+            'Secretary'             => ['dashboard', 'schedules', 'schedules.create', 'members', 'attendance', 'notifications', 'settings'],
+            'Assistant Secretary'   => ['dashboard', 'schedules', 'schedules.create', 'members', 'attendance', 'notifications', 'settings'],
+
+            'Treasurer'             => ['dashboard', 'schedules', 'notifications', 'settings'],
+            'Assistant Treasurer'   => ['dashboard', 'schedules', 'notifications', 'settings'],
+
             'Socio-Cultural Chairman' => ['dashboard', 'schedules', 'notifications', 'settings'],
-            
+
             'Spirituality Chairman' => ['schedules', 'notifications', 'settings'],
-            'Sports Chairman' => ['schedules', 'notifications', 'settings'],
-            'Music Chairman' => ['schedules', 'notifications', 'settings'],
-            
-            'Companion Brother' => ['schedules', 'notifications', 'settings'],
-            
-            'Member' => ['member-dashboard', 'settings']
+            'Sports Chairman'       => ['schedules', 'notifications', 'settings'],
+            'Music Chairman'        => ['schedules', 'notifications', 'settings'],
+
+            'Companion Brother'     => ['dashboard', 'schedules', 'notifications', 'settings'],
+
+            'Member'                => ['member-dashboard', 'settings'],
         ];
 
         // Gather all permissions for all active roles the user has

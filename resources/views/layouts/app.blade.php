@@ -45,7 +45,13 @@
                 </div>
                 <div>
                     <h1 class="text-lg font-bold leading-tight">Knights of the Altar</h1>
-                    <p class="text-xs text-yellow-400 leading-tight">Admin Dashboard</p>
+                    <p class="text-xs text-yellow-400 leading-tight">
+                        @if(auth()->check())
+                            {{ auth()->user()->positions->first()?->position_name ?? 'Member' }} Tol {{ auth()->user()->last_name }}
+                        @else
+                            Welcome
+                        @endif
+                    </p>
                 </div>
             </div>
 

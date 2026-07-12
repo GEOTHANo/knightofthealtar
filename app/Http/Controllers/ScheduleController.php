@@ -53,7 +53,6 @@ class ScheduleController extends Controller
         $weekEnd = $weekStart->copy()->addDays(6);
 
         $eligibleMembers = Member::active()
-            ->where('is_deleted', false)
             ->orderBy('last_name')
             ->orderBy('first_name')
             ->get();

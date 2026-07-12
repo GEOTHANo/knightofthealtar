@@ -15,7 +15,7 @@ class AttendanceController extends Controller
         $weekStart = Carbon::now()->previous(Carbon::SATURDAY);
         $weekEnd = $weekStart->copy()->addDays(6);
 
-        $activeMembers = Member::active()->where('is_deleted', false)->orderBy('last_name')->get();
+        $activeMembers = Member::active()->orderBy('last_name')->orderBy('first_name')->get();
 
         // Get attendance for current week
         $attendanceRecords = Attendance::whereBetween('meeting_week_start', [$weekStart->subWeeks(4), $weekEnd])
@@ -40,7 +40,7 @@ class AttendanceController extends Controller
 
     public function check()
     {
-        $activeMembers = Member::active()->where('is_deleted', false)->orderBy('last_name')->orderBy('first_name')->get();
+        $activeMembers = Member::active()->orderBy('last_name')->orderBy('first_name')->get();
 
         // Default week: Saturday to Friday
         $weekStart = Carbon::now()->previous(Carbon::SATURDAY);

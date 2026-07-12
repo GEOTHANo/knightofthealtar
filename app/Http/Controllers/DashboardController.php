@@ -64,7 +64,7 @@ class DashboardController extends Controller
                 $q->where('is_current', true);
             }])
             ->orderBy('last_name')
-            ->get();
+            ->paginate(5);
 
         // Monthly attendance data for last 12 months
         $monthlyData = [];

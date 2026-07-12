@@ -7,9 +7,11 @@
             <h1 class="text-2xl font-bold text-gray-800">Notifications</h1>
             <p class="text-sm text-gray-500 mt-1">Manage and send notifications to specific roles.</p>
         </div>
+        @if($canCreate)
         <button onclick="document.getElementById('addNotificationModal').classList.remove('hidden')" class="bg-[#246b9c] hover:bg-[#1a547b] text-white px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors shadow-sm inline-flex items-center justify-center self-start sm:self-auto">
             <i data-lucide="plus" class="w-4 h-4 mr-2"></i> Add Notification
         </button>
+        @endif
     </div>
 
     @if(session('success'))
@@ -89,6 +91,7 @@
 </div>
 
 <!-- Add Notification Modal -->
+@if($canCreate)
 <div id="addNotificationModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-4xl overflow-hidden">
         <div class="flex justify-between items-center p-6 border-b border-gray-100">
@@ -134,6 +137,7 @@
         </form>
     </div>
 </div>
+@endif
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

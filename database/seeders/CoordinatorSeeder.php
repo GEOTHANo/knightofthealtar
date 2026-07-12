@@ -27,9 +27,7 @@ class CoordinatorSeeder extends Seeder
                 'first_name' => 'Admin',
                 'last_name' => 'Coordinator',
                 'birth_date' => '1980-01-01',
-                'gender' => 'Male',
                 'status' => 'Active',
-                'is_deleted' => false,
             ]
         );
 
