@@ -1,13 +1,11 @@
 $msdeploy = "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe"
 $source = "c:\Users\Geoff\Desktop\KOA PROJECT\koa-attendance-system"
-$server = "https://site79006.siteasp.net:8172/msdeploy.axd?site=site79006"
-$user = "site79006"
-$pass = "2Em?k8#MP=a7"
+$settings = "c:\Users\Geoff\Desktop\KOA PROJECT\koa-attendance-system\knights-of-the-altar.runasp.net-WebDeploy.publishSettings"
 
 $args = @(
     "-verb:sync",
     "-source:iisApp=`"$source`"",
-    "-dest:iisApp=site79006,computerName=`"$server`",userName=$user,password=$pass,authType=Basic",
+    "-dest:auto,publishSettings=`"$settings`"",
     "-skip:objectName=dirPath,absolutePath=node_modules",
     "-skip:objectName=dirPath,absolutePath=tests",
     "-skip:objectName=dirPath,absolutePath=\.git",
@@ -15,6 +13,6 @@ $args = @(
     "-allowUntrusted"
 )
 
-Write-Host "Deploying changes..."
+Write-Host "Deploying via publishSettings..."
 & $msdeploy $args
 Write-Host "Exit code: $LASTEXITCODE"
