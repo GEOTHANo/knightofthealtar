@@ -8,12 +8,17 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\LandingController;
 use Illuminate\Support\Facades\Route;
 
+// Public Landing Page
+Route::get('/', [LandingController::class, 'index'])->name('landing');
+
 // Auth Routes
-Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 // Protected Routes
 Route::middleware('auth')->group(function () {
