@@ -55,6 +55,11 @@
         <!-- Right Side (Login Form) -->
         <div class="w-full lg:w-2/5 flex flex-col items-center justify-center p-8 sm:p-12 lg:p-16 bg-white dark:bg-slate-900 relative">
             
+            <!-- Top Controls (Back Button & Theme Toggle) -->
+            <a href="{{ route('landing') }}" class="absolute top-6 left-6 inline-flex items-center text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all p-2 px-3 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 shadow-xs" title="Back to Landing Page">
+                <i data-lucide="arrow-left" class="w-4 h-4 mr-1.5"></i> Back to Home
+            </a>
+
             <!-- Dark Mode Toggle Button on Login Page -->
             <button id="login-theme-toggle" type="button" class="absolute top-6 right-6 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-amber-500 dark:text-sky-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all focus:outline-none" title="Toggle Theme">
                 <i data-lucide="sun" id="login-light-icon" class="w-5 h-5 hidden"></i>
@@ -62,6 +67,13 @@
             </button>
 
             <div class="w-full max-w-sm">
+                <!-- Back Button for small screen layout alignment -->
+                <div class="mb-4 sm:hidden">
+                    <a href="{{ route('landing') }}" class="inline-flex items-center text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+                        <i data-lucide="arrow-left" class="w-3.5 h-3.5 mr-1"></i> Back to Landing Page
+                    </a>
+                </div>
+
                 <!-- Mobile Logo (visible only on small screens) -->
                 <div class="lg:hidden flex justify-center mb-8">
                     <div class="w-20 h-20 bg-white rounded-2xl p-1 shadow-md flex items-center justify-center overflow-hidden border border-slate-200 dark:border-slate-800">
